@@ -12,24 +12,15 @@ pipeline {
         }
         stage('Build docker image'){
             steps{
-                script{
-                    bat 'docker build -t jeraldjr/spring-boot-docker .'
-                }
+
+                    bat 'docker build -t jero/spring-boot-docker .'
+
             }
         }
-        stage('Push image to Hub'){
-            steps{
-                script{
-                   withCredentials([string(credentialsId: 'hubpassword', variable: 'password')]) {
-                     bat 'docker login -u jeraldjr -p ${password}'
-}
-
-              bat 'docker push jeraldjr/spring-boot-docker'
-                }
-
-
-
-            }
+        stage('Docker run Container'){
+     steps {
+               bat "docker run -p 9093:8080 spring-boot-docker.jar"
+     }
         }
     }
 }
