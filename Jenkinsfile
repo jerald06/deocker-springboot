@@ -19,11 +19,15 @@ pipeline {
         }
         stage('Push image to Hub'){
             steps{
-               withCredentials([string(credentialsId: 'passworddockerhub', variable: 'hub-password')])   {
-                    bat 'docker login -u jeraldjr -p ${hub-password}'
+                script{
+                   withCredentials([string(credentialsId: 'hubpassword', variable: 'password')]) {
+                     echo 'docker login -u jeraldjr -p ${env.password}'
+}
 
-             }
-             bat 'docker push jeraldjr/spring-boot-docker'
+              bat 'docker push jeraldjr/spring-boot-docker'
+                }
+
+
 
             }
         }
