@@ -12,17 +12,14 @@ pipeline {
         }
         stage('Build docker image'){
             steps{
-                   script {
+
                     bat 'docker build -t jero/spring-boot-docker .'
-                    }
 
             }
         }
         stage('Docker run Container'){
      steps {
-     script{
-               bat 'docker run -p 9093:8080 jero/spring-boot-docker'
-               }
+               bat "docker run -p 9093:8080 spring-boot-docker.jar"
      }
         }
     }
